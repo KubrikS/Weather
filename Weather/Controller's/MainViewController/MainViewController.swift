@@ -9,26 +9,15 @@ import UIKit
 import CoreLocation
 import CoreData
 
-extension UINavigationController {
-    open override var preferredStatusBarStyle: UIStatusBarStyle {
-        .darkContent
-    }
-}
-
-protocol FavouriteDelegate: AnyObject {
-    func mainWeatherUpdate(for city: String)
-}
-
 class MainViewController: UIViewController {
+    
+    
+    // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var settingsFavouriteButton: UIButton!
-    private lazy var coreDataStack = CoreDataStack(modelName: "FavouriteCity")
-    private var locationManager = CLLocationManager()
-    private var locationCity: CurrentWeatherModel?
-    private let network = FetchWeather()
-    var current: CurrentWeatherModel?
-    var forecast: ForecastModel?
     
+    
+    // MARK: - Actions
     @IBAction func transitionToSearch(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "searchSegue", sender: nil)
     }
@@ -41,6 +30,15 @@ class MainViewController: UIViewController {
         coreDataMethods(.addNewCity)
     }
 
+    
+    // MARK: - Properties
+    private lazy var coreDataStack = CoreDataStack(modelName: "FavouriteCity")
+    private var locationManager = CLLocationManager()
+    private var locationCity: CurrentWeatherModel?
+    private let network = FetchWeather()
+    var current: CurrentWeatherModel?
+    var forecast: ForecastModel?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,10 +53,6 @@ class MainViewController: UIViewController {
         coreDataMethods(.updateToNewData)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        coreDataMethods(.checkCities)
-    }
-    
     @objc private func updateData() {
         if let city = current?.name {
             fetchCurrentWeather(with: city)
@@ -66,6 +60,7 @@ class MainViewController: UIViewController {
         tableView.refreshControl?.endRefreshing()
     }
 }
+
 
 // MARK: - TableView Delegate & DataSource
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
@@ -87,7 +82,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
-        case 0: return 300
+        case 0: return view.bounds.height / 2.5
         case 1: return 100
         default: return 80
         }
@@ -99,7 +94,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "currentCell", for: indexPath) as! CurrentTempCell
             cell.cityLabel.text = current?.name ?? "City"
             cell.icon.image = setIcon(condition: current?.weather[indexPath.row].main ?? "Clear")
-            cell.desriptionLabel.text = current?.weather[indexPath.row].description ?? "Clear sky"
+            cell.desriptionLabel.text = current?.weather[indexPath.row].description.localizedCapitalized ?? "Clear sky"
             cell.tempLabel.text = "\(Int(current?.main.temp ?? 0))°"
             cell.feelsLabel.text = "Feel's like: \(Int(current?.main.feelsLike ?? 0))°"
             cell.separatorInset = .init(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
@@ -150,11 +145,8 @@ extension MainViewController: CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
         
         switch CLLocationManager.authorizationStatus() {
-        case .authorizedAlways:
-            print("AuthorizedAlways")
-        case .authorizedWhenInUse:
+        case .authorizedAlways, .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
-            print("AuthorizedWhenInUse")
         case .denied:
             let alertController = UIAlertController(title: "Location not found",
                                                     message: "Please, check geolocation settings or find city in search!",
@@ -167,8 +159,7 @@ extension MainViewController: CLLocationManagerDelegate {
             print("NotDetermined")
         case .restricted:
             print("Restricted")
-        default:
-            print("Authorized")
+        default: break
         }
     }
     
@@ -239,6 +230,7 @@ extension MainViewController {
                     let city = City(context: coreDataStack.managedContext)
                     if let current = current {
                         city.name = current.name
+                        city.descrip = current.weather.first?.description.localizedCapitalized
                         city.temp = current.main.temp
                         addedCities.append(city)
                         settingsFavouriteButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
@@ -269,6 +261,7 @@ extension MainViewController {
                     switch result {
                     case .success(let response):
                         city.temp = response.main.temp
+                        city.descrip = response.weather.first?.description.localizedCapitalized
                         self.coreDataStack.saveContext()
                     case .failure(let error):
                         print("Error in \(#function) - \(error.localizedDescription)")

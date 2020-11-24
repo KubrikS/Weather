@@ -13,7 +13,7 @@ class FavouriteViewController: UIViewController {
     var locationCity: CurrentWeatherModel?
     weak var delegate: FavouriteDelegate?
     
-    // CoreDataStack and FetchedResultsController settings
+    // MARK: - CoreDataStack and FetchedResultsController settings
     private lazy var coreDataStack = CoreDataStack(modelName: "FavouriteCity")
     private lazy var citiesFetchRequest = NSFetchRequest<City>(entityName: "City")
     private lazy var fetchedResultsController: NSFetchedResultsController<City> = {
@@ -67,12 +67,14 @@ extension FavouriteViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as! LocationCell
             cell.cityLabel.text = locationCity?.name ?? "Location not found"
+            cell.descriptionLabal.text = locationCity?.weather.first?.description.localizedCapitalized
             cell.tempLabel.text = "\(Int(locationCity?.main.temp ?? 0))°"
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "favouriteCell", for: indexPath) as! FavouriteCell
             let city = fetchedResultsController.fetchedObjects![indexPath.row]
             cell.cityLabel.text = city.name
+            cell.descriptionLabel.text = city.descrip
             cell.tempLabel.text = "\(Int(city.temp))°"
             return cell
         default:
@@ -118,12 +120,12 @@ extension FavouriteViewController: UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [delete])
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? "Current Location" : "Favourite Cities"
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 0: return 80
-        default: return 100
-        }
+        return indexPath.section == 0 ? 80 : 90
     }
 }
 

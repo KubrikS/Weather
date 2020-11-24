@@ -26,6 +26,7 @@
 		85B6A87B254EDA1A004E5EB4 /* FavouriteCity.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85B6A879254EDA1A004E5EB4 /* FavouriteCity.xcdatamodeld */; };
 		85B6A87F254EDA6F004E5EB4 /* City+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B6A87D254EDA6F004E5EB4 /* City+CoreDataClass.swift */; };
 		85B6A880254EDA6F004E5EB4 /* City+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B6A87E254EDA6F004E5EB4 /* City+CoreDataProperties.swift */; };
+		85BB6C40256D2B0E00DF9A64 /* MainViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BB6C3F256D2B0E00DF9A64 /* MainViewController+Delegate.swift */; };
 		85C906A1254C637E000055D0 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C906A0254C637E000055D0 /* Service.swift */; };
 		85C906B1254CAE23000055D0 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C906B0254CAE23000055D0 /* Functions.swift */; };
 		85C906B9254CB426000055D0 /* FavouriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C906B8254CB426000055D0 /* FavouriteViewController.swift */; };
@@ -56,6 +57,7 @@
 		85B6A87A254EDA1A004E5EB4 /* FavouriteCity.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavouriteCity.xcdatamodel; sourceTree = "<group>"; };
 		85B6A87D254EDA6F004E5EB4 /* City+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "City+CoreDataClass.swift"; sourceTree = "<group>"; };
 		85B6A87E254EDA6F004E5EB4 /* City+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "City+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		85BB6C3F256D2B0E00DF9A64 /* MainViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Delegate.swift"; sourceTree = "<group>"; };
 		85C906A0254C637E000055D0 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		85C906B0254CAE23000055D0 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		85C906B8254CB426000055D0 /* FavouriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewController.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				85AA41A8254C4B950007E540 /* MainViewController.swift */,
+				85BB6C3F256D2B0E00DF9A64 /* MainViewController+Delegate.swift */,
 				851DE65B254C5347004AE86C /* Cell's */,
 			);
 			path = MainViewController;
@@ -346,6 +349,7 @@
 				859ED978254F0C2D00DB10B7 /* Animate.swift in Sources */,
 				859ED972254F089B00DB10B7 /* SearchCell.swift in Sources */,
 				85B6A880254EDA6F004E5EB4 /* City+CoreDataProperties.swift in Sources */,
+				85BB6C40256D2B0E00DF9A64 /* MainViewController+Delegate.swift in Sources */,
 				85AA41A5254C4B950007E540 /* AppDelegate.swift in Sources */,
 				85EE949725536C520059A17E /* ForecastWeatherModel.swift in Sources */,
 				8599E0FB254C508E006234B6 /* ForecastCell.swift in Sources */,

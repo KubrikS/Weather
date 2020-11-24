@@ -9,14 +9,13 @@ import UIKit
 
 class LocationCell: UITableViewCell {
     @IBOutlet var cityLabel: UILabel!
+    @IBOutlet var descriptionLabal: UILabel!
     @IBOutlet var tempLabel: UILabel!
     @IBOutlet var locationView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        locationView.layer.cornerRadius = 0
-        locationView.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundForCurrentCell")!)
-        locationView.addBottomShadow()
+        locationView.backgroundColor = UIColor(patternImage: UIImage(named: "locationBG")!)
     }
     
 }

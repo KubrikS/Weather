@@ -17,6 +17,7 @@ extension City {
     }
 
     @NSManaged public var name: String?
+    @NSManaged public var descrip: String?
     @NSManaged public var temp: Double
 
 }
